@@ -41,23 +41,22 @@ namespace HotelPricing
 
         private void calculateBtn_Click(object sender, EventArgs e)
         {
-
+            int days = (int)residenceWeeksNUD.Value * 7;
             RoomType selectedType = roomTypes[(int)roomTypesLB.SelectedValue];
-            FinalPrice = residenceWeeksNUD.Value * 7 * selectedType.RoomPrice;
             if (allInclusiveCB.Checked)
             {
-                FinalPrice = residenceWeeksNUD.Value * 7 * selectedType.AllInclusivePrice + swimPrice;
+                FinalPrice = days * selectedType.AllInclusivePrice + swimPrice;
             }
             else
             {
-                FinalPrice = residenceWeeksNUD.Value * 7 * selectedType.RoomPrice;
+                FinalPrice = days * selectedType.RoomPrice;
 
                 if (swimmingPoolCB.Checked)
                     FinalPrice += swimPrice;
                 if (twoTimesRB.Checked)
-                    FinalPrice += mealPrice;
+                    FinalPrice += mealPrice * days;
                 if (threeTimesRB.Checked)
-                    FinalPrice += mealPrice * 2;
+                    FinalPrice += mealPrice * 2 * days;
             }
 
             finalPriceLbl.Text = $"Итоговая стоимость: {FinalPrice} руб.";
